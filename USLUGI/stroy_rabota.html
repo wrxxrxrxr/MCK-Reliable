@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/main/bootstrap.min.css">
+    <link rel="stylesheet" href="/USLUGI/stroy_rabota.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css"> <!-- Подключаем стили intl-tel-input -->
+    <title>Отделочные работы</title>
+</head>
+
+<body>
+    <!-- MENU BAR -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/main/index.html">Логотип</a>
+        </div>
+    </nav>
+
+    <div class="back-button">
+        <a href="/USLUGI/usluga.html" class="service">
+            ↩ Назад
+        </a>
+    </div>
+
+    <div class="rectangle-container">
+        <!-- Контейнер для списка рабочих -->
+        <div class="rectangle">
+            <h3 class="workers-title">Рабочие</h3>
+            <div class="workers" id="workers-otdel-container">
+
+            </div>
+        </div>
+
+
+        <div class="rectangle" id="worker-info">
+            <h3>Информация о рабочем</h3>
+            <div id="worker-details">
+                <p id="worker-name">Выберите рабочего</p>
+                <p id="worker-age"></p>
+                <p id="worker-experience"></p>
+            </div>
+            <div id="worker-calendar">
+                <p>Выберите доступную дату:</p>
+                <input type="text" id="calendar-input" />
+                <button id="submit-request" style="display: none;" class="btn btn-danger">Оформить заявку</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="booking-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close">&times;</span>
+            <h2>Оформление заявки</h2>
+            <p>Рабочий: <span id="worker-name-modal"></span></p>
+            <p>Дата: <span id="worker-date-modal"></span></p>
+            <p>Тип работ: <span id="work-type-modal">Отделочные</span></p> 
+
+            <p>Введите ваши данные:</p>
+            <form id="booking-form">
+                <label for="user-name">Имя:</label>
+                <input type="text" id="user-name" name="user-name" required />
+                <label for="user-phone">Телефон:</label>
+                <input type="tel" id="user-phone" name="user-phone" required class="phone-input" />
+                <label for="user-email">Email:</label>
+                <input type="email" id="user-email" name="user-email" required />
+                <button type="submit" class="btn btn-success">Оформить</button>
+            </form>
+        </div>
+    </div>
+
+         <!-- FOOTER -->
+         <footer class="site-footer">
+            <div class="container">
+                 <div class="row">
+  
+                      <div class="ml-auto col-lg-4 col-md-5">
+                          <p class="copyright-text">OOO MCK-Reliable.
+                          
+                      </div>
+  
+                      <div class="d-flex justify-content-center mx-auto col-lg-5 col-md-7 col-12">
+                          <p class="mr-4">
+                              <i class="fa fa-envelope-o mr-1"></i>
+                              <a href="#">mckreliable@gmail.com</a>
+                          </p>
+  
+                          <p><i class="fa fa-phone mr-1"></i> +375(29)915-47-83</p>
+                      </div>
+                      
+                 </div>
+            </div>
+       </footer>
+
+    <!-- Подключение Bootstrap JS -->
+    <!-- <script src="/main/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
+
+    <script>
+        let bookedDates = []; // Массив для всех забронированных дат
+
+        // Загрузка списка рабочих
+        async function loadWorkers() {
+    try {
+        const response = await fetch('http://localhost:3002/api/workersOtdel'); // Новый маршрут
+        const workers = await response.json();
+
+        const workersContainer = document.getElementById('workers-otdel-container');
+        workersContainer.innerHTML = '';
+
+        workers.forEach(worker => {
+            const workerDiv = document.createElement('div');
+            workerDiv.className = 'worker';
+            workerDiv.onclick = () => showWorkerInfo(worker._id);
+
+            workerDiv.innerHTML = `
+                <img src="http://localhost:3002/workersOtdel/photos${worker.photoUrl}" alt="${worker.name}" class="worker-photo">
+                <p class="worker-name">${worker.name}</p>
+            `;
+
+            workersContainer.appendChild(workerDiv);
+        });
+    } catch (error) {
+        console.error('Ошибка при загрузке рабочих:', error);
+    }
+}
+
+
+
+        // Загрузка информации о конкретном рабочем
+        async function showWorkerInfo(workerId) {
+    try {
+        const response = await fetch(`http://localhost:3002/api/workersOtdel/${workerId}`);
+        const worker = await response.json();
+
+        document.getElementById('worker-name').innerText = worker.name;
+        document.getElementById('worker-age').innerText = `Возраст: ${worker.age}`;
+        document.getElementById('worker-experience').innerText = `Опыт работы: ${worker.experience}`;
+
+        flatpickr('#calendar-input', {
+            enable: worker.availableDates || [],
+            dateFormat: "Y-m-d",
+            onChange: function (selectedDates, dateStr, instance) {
+                const submitButton = document.getElementById('submit-request');
+                if (dateStr) {
+                    submitButton.style.display = 'inline-block';
+                } else {
+                    submitButton.style.display = 'none';
+                }
+            }
+        });
+    } catch (error) {
+        console.error('Ошибка при загрузке информации о рабочем:', error);
+    }
+}
+
+
+
+        // Инициализация intl-tel-input для выбора кода страны
+        document.addEventListener('DOMContentLoaded', function () {
+            const phoneInput = document.querySelector("#user-phone");
+            const iti = intlTelInput(phoneInput, {
+                initialCountry: "by", // Устанавливаем начальную страну (например, Россия)
+                utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js", // Путь к утилитам
+            });
+
+            // Обработка отправки формы
+            document.getElementById('booking-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const name = document.getElementById('user-name').value;
+                const phone = iti.getNumber(); // Получаем полный номер с кодом страны
+                const email = document.getElementById('user-email').value;
+                const workerName = document.getElementById('worker-name-modal').innerText;
+                const selectedDate = document.getElementById('worker-date-modal').innerText;
+                const workType = document.getElementById('work-type-modal').innerText;
+
+                const bookingData = { name, phone, email, workerName, selectedDate, workType };
+
+                try {
+                    const response = await fetch('http://localhost:3002/api/bookings', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(bookingData)
+                    });
+
+                    const result = await response.json();
+                    if (result.success) {
+                        alert('Заявка оформлена!');
+                        document.getElementById('booking-modal').style.display = 'none'; // Закрытие модального окна
+                    } else {
+                        alert('Ошибка при отправке заявки.');
+                    }
+                } catch (error) {
+                    console.error('Ошибка при отправке заявки:', error);
+                    alert('Ошибка при отправке заявки.');
+                }
+            });
+        });
+
+        // Открытие модального окна
+        document.getElementById('submit-request').addEventListener('click', () => {
+            const workerName = document.getElementById('worker-name').innerText;
+            const selectedDate = document.getElementById('calendar-input').value;
+
+            // Заполняем модальное окно
+            document.getElementById('worker-name-modal').innerText = workerName;
+            document.getElementById('worker-date-modal').innerText = selectedDate;
+
+            // Показываем модальное окно
+            document.getElementById('booking-modal').style.display = 'block';
+        });
+
+        // Закрытие модального окна
+        document.getElementById('close-modal').addEventListener('click', () => {
+            document.getElementById('booking-modal').style.display = 'none';
+        });
+
+        // Загружаем список рабочих при загрузке страницы
+        document.addEventListener('DOMContentLoaded', loadWorkers);
+    </script>
+</body>
+</html>

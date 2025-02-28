@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/main/bootstrap.min.css">
+    <link rel="stylesheet" href="/USLUGI/proektirovaniec.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+    <title>Проектирование</title>
+</head>
+
+<body>
+    <!-- MENU BAR -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/main/index.html">Логотип</a>
+        </div>
+    </nav>
+
+    <div class="back-button">
+        <a href="/USLUGI/usluga.html" class="service">
+            ↩ Назад
+        </a>
+    </div>
+
+    <div class="container mt-5">
+        <h2 class="text-center">Услуги проектирования</h2>
+        <p class="text-center">Мы предлагаем профессиональные услуги проектирования зданий и сооружений. Заполните форму ниже, чтобы заказать консультацию.</p>
+    </div>
+
+    <div class="container form-container">
+        <h3 class="text-center">Оформить заказ</h3>
+        <form id="project-form">
+            <label for="name">Имя:</label>
+            <input type="text" id="name" name="name" required class="form-control">
+    
+            <label for="user-email">Почта:</label>
+            <input type="email" id="user-email" name="email" required class="form-control">
+    
+            <label for="user-phone">Телефон:</label>
+            <input type="tel" id="user-phone" name="phone" required class="form-control">
+    
+            <label for="object-type">Тип объекта:</label>
+            <select id="object-type" name="objectType" class="form-control">
+                <option value="Частный дом">Частный дом</option>
+                <option value="Коммерческое здание">Коммерческое здание</option>
+                <option value="Многоквартирный дом">Многоквартирный дом</option>
+            </select>
+    
+            <label for="area">Площадь объекта (м²):</label>
+            <input type="number" id="area" name="area" class="form-control">
+    
+            <label for="comment">Комментарий:</label>
+            <textarea id="comment" name="comment" class="form-control"></textarea>
+    
+            <label for="file">Прикрепить файл (эскиз, чертеж):</label>
+            <input type="file" id="file" name="file" class="form-control">
+    
+            <label>
+                <input type="checkbox" name="agreement" required> Согласен на обработку данных
+            </label>
+            
+            <button type="submit" class="btn btn-primary mt-3">Отправить заявку</button>
+        </form>
+    </div>
+    
+    <script>
+      document.getElementById("project-form").addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    // Получаем данные из формы
+    const formData = new FormData(this);
+
+    // Преобразуем FormData в объект для отправки JSON
+    const formObject = {
+        name: formData.get("name"),
+        email: formData.get("email"),
+        phone: formData.get("phone"),
+        objectType: formData.get("objectType"),
+        area: formData.get("area"),
+        comment: formData.get("comment"),
+    };
+
+    try {
+        const response = await fetch("http://localhost:3002/api/proektirBooking", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json', // Указываем, что отправляем JSON
+            },
+            body: JSON.stringify(formObject), // Отправляем данные как JSON
+        });
+
+        const result = await response.json();
+        alert(result.success || result.error);
+    } catch (error) {
+        console.error("Ошибка при отправке:", error);
+        alert("Ошибка отправки данных");
+    }
+});
+
+    </script>
+    
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="ml-auto col-lg-4 col-md-5">
+                    <p class="copyright-text">OOO MCK-Reliable.</p>
+                </div>
+                <div class="d-flex justify-content-center mx-auto col-lg-5 col-md-7 col-12">
+                    <p class="mr-4">
+                        <i class="fa fa-envelope-o mr-1"></i>
+                        <a href="#">mckreliable@gmail.com</a>
+                    </p>
+                    <p><i class="fa fa-phone mr-1"></i> +375(29)915-47-83</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

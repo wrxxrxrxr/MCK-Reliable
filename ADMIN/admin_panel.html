@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель администратора</title>
+    
+</head>
+<body>
+
+    <!-- Боковое меню -->
+    <div class="sidebar">
+        <h2>Панель администратора <span style="color: #f13a11;">MCK-Reliable</span></h2>
+        <ul>
+            <li><a href="#" onclick="showPage('dashboard')">Главная</a></li>
+            <li><a href="#" onclick="showPage('projects')">Управление проектами</a></li>
+            <li><a href="#" onclick="showPage('calculator')">Управление калькулятором</a></li>
+            <li><a href="#" onclick="showPage('workers')">Управление рабочими</a></li>
+            <li><a href="#" onclick="showPage('orders')">Обработка заказов</a></li>
+            <li><a href="#" onclick="showPage('reviews')">Управление отзывами</a></li>
+            <li><a href="/main/index.html"><span style="color: #f13a11;">Вернуться назад</span></a></li>
+        </ul>
+    </div>
+
+    <!-- Основной контент -->
+    <div class="content">
+        <!-- Главная страница -->
+        <div id="dashboard" class="page active">
+            <h1>Главная</h1>
+            <p>Добро пожаловать в панель администратора! Здесь вы можете управлять проектами, рабочими, заказами и отзывами.</p>
+            <div>
+                <h2>Статистика</h2>
+                <p>Количество проектов: <strong>10</strong></p>
+                <p>Количество рабочих: <strong>25</strong></p>
+                <p>Новых заказов: <strong>5</strong></p>
+                <p>Отзывов на модерации: <strong>3</strong></p>
+            </div>
+        </div>
+
+<!-- Управление проектами -->
+<div id="projects" class="page">
+    <h1>Управление проектами</h1>
+    <form id="project-form">
+        <div class="form-group">
+            <label for="project_name">Название проекта:</label>
+            <input type="text" id="project_name" name="project_name" required>
+        </div>
+        <div class="form-group">
+            <label for="project_photos">Фотографии проекта (до 10):</label>
+            <input type="file" id="project_photos" name="project_photos[]" multiple accept="image/*" required>
+            <small>Выберите до 10 фотографий.</small>
+        </div>
+        <div class="form-group">
+            <button type="submit">Добавить проект</button>
+        </div>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Название</th>
+                <th>Фотографии</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody id="projects-table-body">
+            <!-- Здесь будут вставляться данные -->
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+        <!-- Управление калькулятором -->
+        <div id="calculator" class="page">
+            <h1>Управление калькулятором</h1>
+            <form action="manage_calculator.php" method="post">
+                <div class="form-group">
+                    <label for="calculator_data">Данные для калькулятора:</label>
+                    <textarea id="calculator_data" name="calculator_data" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Обновить данные</button>
+                </div>
+            </form>
+        </div>
+
+
+
+
+<!-- Управление рабочими -->
+<div id="workers" class="page">
+    <h1>Управление рабочими</h1>
+    <form id="add-worker-form">
+    <div class="form-group">
+        <label for="worker_name">Имя рабочего:</label>
+        <input type="text" id="worker_name" name="worker_name" required>
+    </div>
+    <div class="form-group">
+        <label for="worker_position">Должность:</label>
+        <input type="text" id="worker_position" name="worker_position" required>
+    </div>
+    <div class="form-group">
+        <label for="worker_age">Возраст:</label>
+        <input type="number" id="worker_age" name="worker_age" required>
+    </div>
+    <div class="form-group">
+        <label for="worker_experience">Опыт:</label>
+        <input type="text" id="worker_experience" name="worker_experience" required>
+    </div>
+    <div class="form-group">
+        <label for="worker_photo">Фото URL:</label>
+        <input type="text" id="worker_photo" name="worker_photo">
+    </div>
+    <div class="form-group">
+        <button type="submit">Добавить рабочего</button>
+    </div>
+</form>
+
+    <h2>Электромонтаж</h2>
+    <table id="electromontage-workers">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Имя</th>
+                <th>Возраст</th>
+                <th>Опыт</th>
+                <th>Фото</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    
+    <h2>Отделочники</h2>
+    <table id="otdel-workers">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Имя</th>
+                <th>Возраст</th>
+                <th>Опыт</th>
+                <th>Фото</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <h2>Демонтажники</h2>
+    <table id="demont-workers">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Имя</th>
+                <th>Возраст</th>
+                <th>Опыт</th>
+                <th>Фото</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<!-- Модальное окно редактирования рабочего -->
+<div id="edit-worker-modal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeEditForm()">&times;</span>
+        <h3>Редактировать рабочего</h3>
+        <label for="workerName">Имя:</label>
+        <input type="text" id="workerName">
+        <br>
+        <label for="workerAge">Возраст:</label>
+        <input type="number" id="workerAge">
+        <br>
+        <label for="workerExperience">Опыт:</label>
+        <input type="text" id="workerExperience">
+        <br>
+        <label for="workerPhoto">Фото URL:</label>
+        <input type="text" id="workerPhoto">
+        <br>
+        <button id="saveWorkerButton">Сохранить</button>
+        <button onclick="closeEditForm()">Отменить</button>
+    </div>
+</div>
+
+<!-- Стили для модального окна -->
+<style>
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+.close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+</style>
+
+<!-- Скрипт для открытия и закрытия модального окна -->
+<script>
+function openEditForm() {
+    document.getElementById("edit-worker-modal").style.display = "flex";
+}
+function closeEditForm() {
+    document.getElementById("edit-worker-modal").style.display = "none";
+}
+</script>
+
+
+
+
+
+        <!-- Обработка заказов -->
+        <div id="orders" class="page">
+            <h1>Обработка заказов</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID заказа</th>
+                        <th>Имя клиента</th>
+                        <th>Телефон</th>
+                        <th>Описание заказа</th>
+                        <th>Статус</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Данные о заказах будут загружаться из БД -->
+                    <tr>
+                        <td>1</td>
+                        <td>Алексей Петров</td>
+                        <td>+7 999 123 45 67</td>
+                        <td>Ремонт квартиры</td>
+                        <td>В ожидании</td>
+                        <td>
+                            <button>Подтвердить</button>
+                            <button>Назначить исполнителя</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Управление отзывами -->
+        <div id="reviews" class="page">
+            <h1>Управление отзывами</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID отзыва</th>
+                        <th>Имя клиента</th>
+                        <th>Текст отзыва</th>
+                        <th>Статус</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Данные об отзывах будут загружаться из БД -->
+                    <tr>
+                        <td>1</td>
+                        <td>Мария Сидорова</td>
+                        <td>Отличная работа, спасибо!</td>
+                        <td>На модерации</td>
+                        <td>
+                            <button>Опубликовать</button>
+                            <button>Удалить</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar h2 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin-bottom: 10px;
+        }
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .sidebar ul li a:hover {
+            background-color: #555;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #218838;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+    </style>
+    <script>
+        // Функция для переключения страниц
+        function showPage(pageId) {
+            // Скрываем все страницы
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            // Показываем выбранную страницу
+            document.getElementById(pageId).classList.add('active');
+        }
+    </script>
+    <script src="adminn.js"></script>
+</body>
+</html>

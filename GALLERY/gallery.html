@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>Галерея проектов</title>
+        <link rel="stylesheet" href="/main/bootstrap.min.css">
+        <link rel="stylesheet" href="/GALLERY/galleryc.css">
+    
+        <!-- Подключение CSS Leaflet -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    
+        <!-- Подключение JS Leaflet -->
+        <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    </head>
+    
+
+<body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+
+    <!-- MENU BAR -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/main/index.html">Логотип</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-lg-auto">
+                    <li class="nav-item"><a href="/main/index.html" class="nav-link smoothScroll">Главная</a></li>
+                    <li class="nav-item"><a href="/USLUGI/usluga.html" class="nav-link smoothScroll">Услуги</a></li>
+                    <li class="nav-item"><a href="/GALLERY/gallery.html" class="nav-link smoothScroll">Наши проекты</a></li>
+                    <li class="nav-item"><a href="/CALCULATOR/calculator.html" class="nav-link smoothScroll">Калькулятор</a></li>
+                    <li class="nav-item"><a href="/CONTACTS/contact.html" class="nav-link smoothScroll">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content Section -->
+    <div class="container-fluid mt-5 pt-5">
+        <h2 class="text-center">Наши проекты</h2>
+
+        <!-- Gallery Section -->
+        <div class="container mt-5">
+            <div id="galleryContainer" class="row mt-4">
+                <!-- Карточки с изображениями будут добавлены здесь динамически -->
+            </div>
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+        <iframe 
+            title="Карта объектов MCK-Reliable" 
+            aria-label="Locator map" 
+            id="datawrapper-chart-7Hv6U" 
+            src="https://datawrapper.dwcdn.net/7Hv6U/1/" 
+            scrolling="no" 
+            frameborder="0" 
+            style="width: 100%; max-width: 600px; border: none;" 
+            height="300" 
+            data-external="1">
+        </iframe>
+    </div>
+    <script type="text/javascript">
+        !function() {
+            "use strict";
+            window.addEventListener("message", function(a) {
+                if (void 0 !== a.data["datawrapper-height"]) {
+                    var e = document.querySelectorAll("iframe");
+                    for (var t in a.data["datawrapper-height"]) 
+                        for (var r = 0; r < e.length; r++) 
+                            if (e[r].contentWindow === a.source) {
+                                var i = a.data["datawrapper-height"][t] + "px";
+                                e[r].style.height = i;
+                            }
+                }
+            })
+        }();
+    </script>
+    
+
+         <!-- FOOTER -->
+         <footer class="site-footer">
+            <div class="container">
+                 <div class="row">
+  
+                      <div class="ml-auto col-lg-4 col-md-5">
+                          <p class="copyright-text">OOO MCK-Reliable.
+                          
+                      </div>
+  
+                      <div class="d-flex justify-content-center mx-auto col-lg-5 col-md-7 col-12">
+                          <p class="mr-4">
+                              <i class="fa fa-envelope-o mr-1"></i>
+                              <a href="#">mckreliable@gmail.com</a>
+                          </p>
+  
+                          <p><i class="fa fa-phone mr-1"></i> +375(29)915-47-83</p>
+                      </div>
+                      
+                 </div>
+            </div>
+       </footer>
+
+     <!-- Модальное окно -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="modalGallery" class="modal-gallery">
+            <!-- Динамически добавленные изображения -->
+        </div>
+    </div>
+</div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="/GALLERY/galleryj.js"></script>
+</body>
+
+</html>

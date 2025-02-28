@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="/main/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="/CONTACTS/contactc.css">
+
+</head>
+<body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+
+    <!-- MENU BAR -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/main/index.html">Логотип</a> 
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-lg-auto">
+                    <li class="nav-item">
+                        <a href="/main/index.html" class="nav-link smoothScroll">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/USLUGI/usluga.html" class="nav-link smoothScroll">Услуги</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/GALLERY/gallery.html" class="nav-link smoothScroll">Наши проекты</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/CALCULATOR/calculator.html" class="nav-link smoothScroll">Калькулятор</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/CONTACTS/contact.html" class="nav-link smoothScroll">Контакты</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contact Section -->
+    <div class="contact-header">
+        <h2>Контакты</h2>
+    </div>
+
+    <div class="contact-info d-flex">
+        <div class="contact-details" style="flex: 1; padding: 20px;">
+            <h4>Контактная информация</h4>
+            <p>Телефон: +7 (123) 456-78-90</p>
+            <p>Email: example@example.com</p>
+            <p>Адрес: ул. Примерная, д. 1, г. Москва, Россия</p>
+            <div class="social-icons">
+                <h4>Мы в социальных сетях:</h4>
+                <a href="https://www.facebook.com" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.twitter.com" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.vk.com" target="_blank" title="ВКонтакте"><i class="fab fa-vk"></i></a>
+            </div>
+        </div>
+
+        <div class="contact-form-container" style="flex: 1; padding: 20px;">
+            <form id="contact-form" class="contact-form webform" role="form">
+                <input type="text" class="form-control" name="cf-name" placeholder="Name">
+                <!-- Добавлено поле для телефона с плагином intl-tel-input -->
+                <input type="tel" id="phone" class="form-control" name="cf-phoneNumber" placeholder="Phone Number">
+                <input type="email" class="form-control" name="cf-email" placeholder="Email">
+                <textarea class="form-control" rows="5" name="cf-message" placeholder="Message"></textarea>
+                <button type="submit" class="form-control" id="submit-button">Отправить заявку</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d150465.8472263547!2d27.490797293879204!3d53.89569093077705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46dbc59bf463a0cf%3A0xe70ba6dfdfbf1d9e!2z0KHRgtGA0L7QuNGC0LXQu9GM0L3QsNGPINC4INC_0YDQvtC10LrRgtC90LDRjyDQvtGA0LPQsNC90LjQt9Cw0YbQuNGPINCe0J7QniDCq9Cj0JPQnyDCq9Ch0J7QmtCe0JvCuw!5e0!3m2!1sru!2sby!4v1729576904188!5m2!1sru!2sby" width="100%" height="260" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <div class="footer-text">
+        <p>Рады быть вместе с вами!</p>
+    </div>
+
+         <!-- FOOTER -->
+         <footer class="site-footer">
+            <div class="container">
+                 <div class="row">
+  
+                      <div class="ml-auto col-lg-4 col-md-5">
+                          <p class="copyright-text">OOO MCK-Reliable.
+                          
+                      </div>
+  
+                      <div class="d-flex justify-content-center mx-auto col-lg-5 col-md-7 col-12">
+                          <p class="mr-4">
+                              <i class="fa fa-envelope-o mr-1"></i>
+                              <a href="#">mckreliable@gmail.com</a>
+                          </p>
+  
+                          <p><i class="fa fa-phone mr-1"></i> +375(29)915-47-83</p>
+                      </div>
+                      
+                 </div>
+            </div>
+       </footer>
+
+    <script src="/main/mainj.js"></script>
+    <!-- Скрипт для intl-tel-input -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <!-- Скрипт для утилит intl-tel-input -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
+    <script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Инициализация intl-tel-input
+    const phoneInput = document.querySelector("#phone");
+    const iti = window.intlTelInput(phoneInput, {
+        initialCountry: "auto", // автоматический выбор страны
+        geoIpLookup: function(callback) {
+            fetch("https://ipinfo.io", { headers: { 'Accept': 'application/json' } })
+                .then(response => response.json())
+                .then(data => callback(data.country))
+                .catch(() => callback("by")); // если не удается получить страну, по умолчанию выбирается США
+        },
+        preferredCountries: ["by", "ru", "gb"], // список предпочтительных стран
+        utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js" // скрипт для валидации номера
+    });
+
+    // Обработчик отправки формы
+    document.getElementById('contact-form').addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        // Получаем данные из формы
+        const formData = {
+            name: document.querySelector('[name="cf-name"]').value,
+            // Получаем полный номер с кодом страны
+            number: iti.getNumber(), // это вернет номер с кодом страны
+            email: document.querySelector('[name="cf-email"]').value,
+            message: document.querySelector('[name="cf-message"]').value,
+        };
+
+        try {
+            const response = await fetch('http://localhost:3002/api/contactForms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                alert(data.success);
+            } else {
+                alert(data.error);
+            }
+        } catch (err) {
+            console.error('Ошибка отправки формы:', err);
+            alert('Произошла ошибка при отправке сообщения');
+        }
+    });
+});
+
+    </script>
+</body>
+</html>

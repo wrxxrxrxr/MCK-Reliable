@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в панель администратора</title>
+    
+</head>
+<body>
+
+    <div class="login-form">
+        <h2>Вход в панель администратора</h2>
+        <form id="loginForm">
+            <input type="password" id="password" name="password" placeholder="Введите пароль" required>
+            <input type="submit" value="Войти">
+            <p class="error-message" id="errorMessage">Неверный пароль</p>
+        </form>
+    </div>
+
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        .login-form h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .login-form input[type="password"],
+        .login-form input[type="submit"] {
+            width: 92%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .login-form input[type="submit"] {
+            background-color: #c50000;
+            color: #fff;
+            cursor: pointer;
+        }
+        .login-form input[type="submit"]:hover {
+            background-color: #810000;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            display: none;
+        }
+    </style>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var password = document.getElementById("password").value;
+            var correctPassword = "admin123";
+            if (password === correctPassword) {
+                window.location.href = "/Admin/admin_panel.html"; 
+            } 
+        });
+    </script>
+
+</body>
+</html>
