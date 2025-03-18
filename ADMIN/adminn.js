@@ -282,3 +282,63 @@ async function addWorker(workerData) {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Управление отзывами
+// Загрузка всех отзывов для админа
+async function loadReviews() {
+    try {
+        const response = await fetch('http://localhost:3002/api/rewies');
+        const reviews = await response.json();
+
+        const tableBody = document.querySelector('#reviews-table tbody');
+        tableBody.innerHTML = ''; // Очищаем таблицу перед загрузкой новых данных
+
+        reviews.forEach((review) => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${review._id}</td>
+                <td>${review.name || 'Не указано'}</td>
+                <td>${review.email || 'Не указано'}</td>
+                <td>${review.review || 'Не указано'}</td>
+                <td>
+                    <button onclick="publishReview('${review._id}')">Опубликовать</button>
+                    <button onclick="deleteReview('${review._id}')">Удалить</button>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error('Ошибка при загрузке отзывов:', error);
+    }
+}
+
+// Публикация отзыва
+async function publishReview(reviewId) {
+    try {
+        const response = await fetch(`http://localhost:3002/api/rewies/${reviewId}/publish`, {
+            method: 'PUT',
+        });
+        if (response.ok) {
+            alert('Отзыв опубликован');
+            loadReviews(); // Перезагружаем таблицу
+        }
+    } catch (error) {
+        console.error('Ошибка при публикации отзыва:', error);
+    }
+}
+
+// Удаление отзыва
+async function deleteReview(reviewId) {
+    try {
+        const response = await fetch(`http://localhost:3002/api/rewies/${reviewId}`, {
+            method: 'DELETE',
+        });
+        if (response.ok) {
+            alert('Отзыв удален');
+            loadReviews(); // Перезагружаем таблицу
+        }
+    } catch (error) {
+        console.error('Ошибка при удалении отзыва:', error);
+    }
+}
+
+// Загрузить отзывы при загрузке страницы
+window.onload = loadReviews;

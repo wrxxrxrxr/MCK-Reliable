@@ -116,7 +116,7 @@
         workers.forEach(worker => {
             const workerDiv = document.createElement('div');
             workerDiv.className = 'worker';
-            workerDiv.onclick = () => showWorkerInfo(worker._id, worker.name);
+            workerDiv.onclick = () => showWorkerInfo(worker._id);
 
             // Правильная вставка HTML с изображением
             workerDiv.innerHTML = `
@@ -134,36 +134,46 @@
 
         // Загрузка информации о конкретном рабочем
         async function showWorkerInfo(workerId) {
-            try {
-                const response = await fetch(`http://localhost:3002/api/workersDemont/${workerId}`);
-                const worker = await response.json();
-
-                // Заполняем информацию о рабочем
-                document.getElementById('worker-name').innerText = worker.name;
-                document.getElementById('worker-age').innerText = `Возраст: ${worker.age}`;
-                document.getElementById('worker-experience').innerText = `Опыт работы: ${worker.experience}`;
-
-                // Инициализируем календарь
-                const calendarDiv = document.getElementById('worker-calendar');
-                calendarDiv.classList.remove('hidden'); // Показываем календарь
-
-                // Инициализация Flatpickr с обработкой выбора даты
-                flatpickr('#calendar-input', {
-                    enable: worker.availableDates.filter(date => !bookedDates.includes(date)), // Отключаем забронированные даты для всех рабочих
-                    dateFormat: "Y-m-d",
-                    onChange: function(selectedDates, dateStr, instance) {
-                        // Когда пользователь выбрал дату, показываем кнопку
-                        if (selectedDates.length > 0) {
-                            document.getElementById('submit-request').style.display = 'inline-block'; // Показываем кнопку
-                        } else {
-                            document.getElementById('submit-request').style.display = 'none'; // Скрываем кнопку, если дата не выбрана
-                        }
-                    }
-                });
-            } catch (error) {
-                console.error('Ошибка при загрузке информации о рабочем:', error);
-            }
+    try {
+        const response = await fetch(`http://localhost:3002/api/workersDemont/${workerId}`);
+        if (!response.ok) {
+            throw new Error(`Ошибка HTTP: ${response.status}`);
         }
+        const worker = await response.json();
+        console.log('Данные о рабочем:', worker);
+
+        if (!worker.name || !worker.age || !worker.experience || !worker.availableDates) {
+            throw new Error('Неверный формат данных о рабочем');
+        }
+
+        document.getElementById('worker-name').innerText = worker.name;
+        document.getElementById('worker-age').innerText = `Возраст: ${worker.age}`;
+        document.getElementById('worker-experience').innerText = `Опыт работы: ${worker.experience}`;
+
+        const calendarDiv = document.getElementById('worker-calendar');
+        calendarDiv.classList.remove('hidden');
+
+        const calendarInput = document.getElementById('calendar-input');
+        if (calendarInput) {
+            const flatpickrInstance = flatpickr(calendarInput, {
+                enable: worker.availableDates.filter(date => !bookedDates.includes(date)),
+                dateFormat: "Y-m-d",
+                onChange: function(selectedDates, dateStr, instance) {
+                    if (selectedDates.length > 0) {
+                        document.getElementById('submit-request').style.display = 'inline-block';
+                    } else {
+                        document.getElementById('submit-request').style.display = 'none';
+                    }
+                }
+            });
+            console.log('Календарь инициализирован:', flatpickrInstance);
+        } else {
+            console.error('Элемент #calendar-input не найден');
+        }
+    } catch (error) {
+        console.error('Ошибка при загрузке информации о рабочем:', error);
+    }
+}
 
         // Инициализация intl-tel-input для выбора кода страны
         document.addEventListener('DOMContentLoaded', function () {

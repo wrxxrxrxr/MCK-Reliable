@@ -20,7 +20,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
 
-            <a class="navbar-brand" href="/main/index.html">Логотип</a> 
+            <a class="navbar-brand" href="/main/index.html">MCK-Reliable</a> 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -142,7 +142,7 @@
 
                             <div class="mr-lg-auto mt-5 mt-lg-0 mt-md-0 col-lg-3 col-md-6 col-12">
                                 <div class="team-thumb">
-                                    <img src="/images/team/team-image01.jpg" class="img-fluid" alt="Trainer">
+                                    <img src="/images/IMG_8398-min5.jpg" class="img-fluid" alt="Trainer">
 
                                     <div class="team-info d-flex flex-column">
 
@@ -225,28 +225,28 @@
         <div class="row">
             <div class="gallery-grid">
                 <div class="gallery-item">
-                    <img src="/images/team/viktor.jpg" class="img-fluid" >
+                    <img src="/GALLERY/photo/barber/3.jpg" class="img-fluid" >
                 </div>
                 <div class="gallery-item">
-                    <img src="/photo_2024-09-14_10-05-37-removebg-preview.png" class="img-fluid">
+                    <img src="/GALLERY/photo/beans/_DNK9832.jpg" class="img-fluid">
                 </div>
                 <div class="gallery-item">
-                    <img src="/images/class/cardio-class.jpg" class="img-fluid">
+                    <img src="/GALLERY/photo/Green/DSC08102.jpg" class="img-fluid">
                 </div>
                 <div class="gallery-item">
-                    <img src="/images/team/viktor.jpg" class="img-fluid">
+                    <img src="/GALLERY/photo/Maslow/BO8A3276 1_result.jpg" class="img-fluid">
                 </div>
                 <div class="gallery-item">
-                    <img src="/photo_2024-09-14_10-05-37-removebg-preview.png" class="img-fluid">
+                    <img src="/GALLERY/photo/Zrobym/12.jpg" class="img-fluid">
                 </div>
                 <div class="gallery-item">
-                    <img src="/images/class/cardio-class.jpg" class="img-fluid">
+                    <img src="/GALLERY/photo/Морозова house/1.JPG" class="img-fluid">
                 </div>
                 <div class="gallery-item">
-                    <img src="/images/team/viktor.jpg" class="img-fluid">
+                    <img src="/GALLERY/photo/beans/_DNK9703.jpg" class="img-fluid">
                 </div>
                 <div class="gallery-item">
-                    <img src="/photo_2024-09-14_10-05-37-removebg-preview.png" class="img-fluid">
+                    <img src="/GALLERY/photo/Zrobym/9.jpg" class="img-fluid">
                 </div>
 
                 <a href="" class="btn custom-btn bg-color mt-3">Галерея</a>
@@ -294,6 +294,56 @@
           </script>
     </div>
 </section>
+
+
+<!-- REVIEWS SECTION -->
+<section class="reviews section" id="reviews">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="mb-4">Отзывы наших клиентов</h2>
+                <button class="btn custom-btn bg-color" data-toggle="modal" data-target="#reviewModal">Оставить отзыв</button>
+            </div>
+        </div>
+
+        <!-- Отображение опубликованных отзывов -->
+        <div class="row mt-4" id="published-reviews">
+            <!-- Здесь будут отображаться опубликованные отзывы -->
+        </div>
+    </div>
+</section>
+
+<!-- Модальное окно для оставления отзыва -->
+<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reviewModalLabel">Оставить отзыв</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="reviewForm">
+                    <div class="form-group">
+                        <label for="name">Ваше имя</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Ваш email</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="review">Ваш отзыв</label>
+                        <textarea class="form-control" id="review" name="review" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn custom-btn bg-color">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- CONTACT -->
 <section class="contact section" id="contact">

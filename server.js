@@ -12,7 +12,7 @@ const client = new MongoClient(uri);
 const dbName = 'imagebox'; // Ваша база данных
 const collectionName = 'images'; // Ваша коллекция изображений
 const contactCollectionName = 'contactForms'; // Коллекция для сообщений формы
-const modalCollectionName = 'testResultForm'; // Коллекция для данных модального окна
+const rewiesCollection = 'rewies'; 
 const workerCollectionName = 'workers'; // Коллекция для рабочих
 const workerCollectionOtdelName = 'workersOtdel';
 const workerCollectionDemontName = 'workersDemont'; 
@@ -29,7 +29,7 @@ client.connect().then(() => {
 
 
 
-app.use(cors()); // Разрешаем CORS для всех источников
+app.use(cors()); 
 app.use(express.json());
 app.use('/GALLERY', express.static(path.join(__dirname, 'GALLERY/photo'))); // Путь к изображениям
 app.use('/workers/photos', express.static(path.join(__dirname, 'USLUGI/peoplesElec')));
@@ -52,60 +52,6 @@ app.get('/api/workers', async (req, res) => {
 });
 
 
-// // Добавление рабочего
-// app.post('/api/workers', async (req, res) => {
-//     const { name, age, experience, photoUrl } = req.body;
-//     try {
-//         const result = await db.collection(workerCollectionName).insertOne({ name, age, experience, photoUrl });
-//         res.status(201).json({ _id: result.insertedId, name, age, experience, photoUrl });
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ error: 'Ошибка при добавлении рабочего' });
-//     }
-// });
-
-
-// app.put('/api/workers/:id', async (req, res) => {
-//     const workerId = req.params.id;
-//     const updatedData = req.body;
-
-//     try {
-//         // Найдите рабочего по ID и обновите данные
-//         const updatedWorker = await Worker.findByIdAndUpdate(workerId, updatedData, { new: true });
-
-//         // Если рабочий не найден, отправьте 404
-//         if (!updatedWorker) {
-//             return res.status(404).json({ message: 'Рабочий не найден' });
-//         }
-
-//         res.json(updatedWorker);
-//     } catch (error) {
-//         console.error('Ошибка обновления рабочего:', error); // Логируем ошибку на сервере
-//         res.status(500).json({ message: 'Ошибка обновления рабочего' });
-//     }
-// });
-
-
-
-// Удаление рабочего
-// app.delete('/api/workers/:id', async (req, res) => {
-//     const { id } = req.params;
-//     try {
-//         const result = await db.collection(workerCollectionName).deleteOne({ _id: new ObjectId(id) });
-//         if (result.deletedCount > 0) {
-//             res.status(204).send();
-//         } else {
-//             res.status(404).json({ error: 'Рабочий не найден' });
-//         }
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).json({ error: 'Ошибка при удалении рабочего' });
-//     }
-// });
-
-
-
-
 
 ///////////////////////////////////////////////////////// Рабочие отделочники /////////////////////////////////////////////////////////
 app.get('/api/workersOtdel', async (req, res) => {
@@ -118,20 +64,36 @@ app.get('/api/workersOtdel', async (req, res) => {
     }
 });
 
-// Добавление, редактирование и удаление рабочих для отделочников можно сделать аналогично.
 
 ///////////////////////////////////////////////////////// Рабочие демонтажники /////////////////////////////////////////////////////////
 app.get('/api/workersDemont', async (req, res) => {
     try {
-        const workers = await db.collection(workerCollectionDemontName).find({}).toArray();
+        const workers = await db.collection(workerCollectionDemontName).find().toArray();
         res.json(workers);
     } catch (err) {
         console.error(err);
-        res.status(500).json({ error: 'Ошибка при получении рабочих демонтажников' });
+        res.status(500).json({ error: 'Ошибка при получении списка рабочих' });
     }
 });
 
-// Добавление, редактирование и удаление рабочих для демонтажников можно сделать аналогично.
+// Маршрут для получения информации о конкретном рабочем
+app.get('/api/workersDemont/:id', async (req, res) => {
+    try {
+        const workerId = req.params.id;
+        const worker = await db.collection(workerCollectionDemontName).findOne({ _id: new ObjectId(workerId) });
+
+        if (worker) {
+            res.json(worker);
+        } else {
+            res.status(404).json({ error: 'Рабочий не найден' });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Ошибка при получении информации о рабочем' });
+    }
+});
+
+
 
 
   
@@ -338,6 +300,57 @@ app.post('/api/proektirBooking', async (req, res) => {
 });
 
 
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////ОТЗЫВЫ
+
+
+// Эндпоинт для получения всех отзывов
+// Получение всех отзывов
+app.get('/api/rewies', async (req, res) => {
+    try {
+        const reviews = await rewiesCollection.find({}).toArray();
+        res.json(reviews); // Возвращаем JSON с отзывами
+    } catch (error) {
+        console.error('Ошибка при получении отзывов:', error);
+        res.status(500).json({ error: 'Ошибка сервера' }); // Возвращаем JSON с ошибкой
+    }
+});
+
+// Добавление нового отзыва
+app.post('/api/rewies', async (req, res) => {
+    try {
+        const { name, email, review } = req.body;
+        const result = await rewiesCollection.insertOne({ name, email, review, published: false });
+        res.status(201).json(result.ops[0]);
+    } catch (error) {
+        console.error('Ошибка при добавлении отзыва:', error);
+        res.status(500).send('Ошибка сервера');
+    }
+});
+
+// Публикация отзыва
+app.put('/api/rewies/:id/publish', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await rewiesCollection.updateOne({ _id: new ObjectId(id) }, { $set: { published: true } });
+        res.send('Отзыв опубликован');
+    } catch (error) {
+        console.error('Ошибка при публикации отзыва:', error);
+        res.status(500).send('Ошибка сервера');
+    }
+});
+
+// Удаление отзыва
+app.delete('/api/rewies/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        await rewiesCollection.deleteOne({ _id: new ObjectId(id) });
+        res.send('Отзыв удален');
+    } catch (error) {
+        console.error('Ошибка при удалении отзыва:', error);
+        res.status(500).send('Ошибка сервера');
+    }
+});
 
 
 app.listen(port, () => {

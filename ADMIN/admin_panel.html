@@ -269,31 +269,20 @@ function closeEditForm() {
             </table>
         </div>
 
-        <!-- Управление отзывами -->
         <div id="reviews" class="page">
             <h1>Управление отзывами</h1>
-            <table>
+            <table id="reviews-table">
                 <thead>
                     <tr>
-                        <th>ID отзыва</th>
+                        <th>ID заказа</th>
                         <th>Имя клиента</th>
+                        <th>Почта</th>
                         <th>Текст отзыва</th>
-                        <th>Статус</th>
                         <th>Действия</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Данные об отзывах будут загружаться из БД -->
-                    <tr>
-                        <td>1</td>
-                        <td>Мария Сидорова</td>
-                        <td>Отличная работа, спасибо!</td>
-                        <td>На модерации</td>
-                        <td>
-                            <button>Опубликовать</button>
-                            <button>Удалить</button>
-                        </td>
-                    </tr>
+                    <!-- Данные будут загружены сюда -->
                 </tbody>
             </table>
         </div>

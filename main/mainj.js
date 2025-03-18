@@ -49,6 +49,77 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Отправка данных формы в MongoDB
+document.getElementById('reviewForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const reviewData = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        review: document.getElementById('review').value,
+        published: false // По умолчанию отзыв не опубликован
+    };
+
+    // Отправка данных на сервер
+    fetch('http://localhost:3002/api/rewies', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reviewData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Спасибо за ваш отзыв! Он будет опубликован после проверки.');
+        $('#reviewModal').modal('hide'); // Закрыть модальное окно
+        document.getElementById('reviewForm').reset(); // Очистить форму
+    })
+    .catch(error => {
+        console.error('Ошибка:', error);
+    });
+});
+
+// Загрузка опубликованных отзывов для пользователей
+async function loadPublishedReviews() {
+    try {
+        const response = await fetch('http://localhost:3002/api/rewies?published=true');
+        const reviews = await response.json();
+
+        const reviewsContainer = document.getElementById('published-reviews');
+        reviewsContainer.innerHTML = ''; // Очищаем контейнер
+
+        reviews.forEach(review => {
+            const reviewElement = document.createElement('div');
+            reviewElement.className = 'col-12 mb-4';
+            reviewElement.innerHTML = `
+                <div class="card rounded-lg p-3">
+                    <h5 class="font-weight-bold">${review.name}</h5>
+                    <p>${review.review}</p>
+                </div>
+            `;
+            reviewsContainer.appendChild(reviewElement);
+        });
+    } catch (error) {
+        console.error('Ошибка:', error);
+    }
+}
+
+// Загрузить отзывы при загрузке страницы
+window.onload = loadPublishedReviews;
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
 const scrollToTopBtn = document.getElementById("scrollToTopBtn");
 
 window.addEventListener("scroll", () => {
